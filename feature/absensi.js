@@ -3,20 +3,26 @@ const fs = require('fs')
 const file_grup_dir = `database/data_absen/data_grup`;
 
 async function absensiHandler(msg, sender, isAdmin) {
+    // menggunakan try - catch untuk mencegah program dari crash
     try {
         const prefix = ['!', '/', '.'];
         const file_absen_dir = `database/data_absen/${ msg.from }_absen`;
 
+        // get chat
         const chat = await msg.getChat();
 
+        // mengambil pesan yang dikirim user
         let cmd = msg.body;
         cmd = cmd.split(' ');
 
+        // mengambil data grup pada database
         let dataGrup = fs.readFileSync(file_grup_dir, 'utf-8');
         dataGrup = JSON.parse(dataGrup);
 
+        // membuat variabel yang akan menampung data dari grup
         let data = { group_id: msg.from, sender: sender, cmd: cmd };
 
+        // menambah logika if - else yang akan menangani pemanggilan fungsi
         if (prefix.some(pre => cmd[0].startsWith(`${ pre }absen`))) {
             if(!isAdmin) return msg.reply('Command khusus Admin');
             absen(data, dataGrup, file_absen_dir, chat)
@@ -85,7 +91,6 @@ async function absen(data, dataGrup, absen_dir, chat) {
                     fs.unlinkSync(absen_dir)
                     chat.sendMessage('Batas waktu absen telah habis..');
                 }
-                console.log('jalan')
                 fs.writeFileSync(file_grup_dir, JSON.stringify(dataGrup));
             }, 60000);
         }
@@ -96,7 +101,6 @@ async function absen(data, dataGrup, absen_dir, chat) {
         console.log(e);
         return 'Error';
     }
-
 }
 
 async function closeAbsen(data, dataGrup, absen_dir) {
@@ -104,6 +108,7 @@ async function closeAbsen(data, dataGrup, absen_dir) {
     let indexGrup = dataGrup.findIndex(item => item.group_id == data.group_id);
     if (indexGrup === -1) return 'Belum memulai absen, kirim */absen [time]* untuk memulai absensi';
 
+    // menghapus data absensi dalam database
     dataGrup.splice(indexGrup, 1);
     fs.writeFileSync(file_grup_dir, JSON.stringify(dataGrup));
     try {
@@ -137,8 +142,10 @@ async function hadir(data, dataGrup, absen_dir) {
 
     dataAbsen.push({ name: name, id_pengirim: data.sender });
 
+    // menyimpan data yang telah di update ke database
     fs.writeFileSync(absen_dir, JSON.stringify(dataAbsen));
 
+    // membuat var reply yang akan dikirim oleh bot
     let reply = `*Absensi ${ dataGrup[indexGrup].group_name } ${ dataGrup[indexGrup].absen_start.date }:*\n`;
     let no = 0;
     for(let item of dataAbsen) {
@@ -169,8 +176,10 @@ async function hadirc(data, dataGrup, absen_dir) {
 
     dataAbsen[indexMhs].name = name;
 
+    // menyimpan data yang telah di update ke database
     fs.writeFileSync(absen_dir, JSON.stringify(dataAbsen));
 
+    // membuat var reply yang akan dikirim oleh bot
     let reply = `*Absensi ${ dataGrup[indexGrup].group_name } ${ dataGrup[indexGrup].absen_start.date }:*\n`;
     let no = 0;
     for(let item of dataAbsen) {

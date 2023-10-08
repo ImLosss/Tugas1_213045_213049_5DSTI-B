@@ -6,8 +6,9 @@ const { API_KEY_OPEN_AI } = require('../config');
 const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${ API_KEY_OPEN_AI }`,
-  };
+};
 
+// menambah handler yang akan menangani pemanggilan fungsi
 const ChatAIHandler = async (msg, sender) => {
     const chat = await msg.getChat();
 
@@ -86,7 +87,7 @@ const chapGPT = async (prompt, sender) => {
     }
 };
 
-
+// export module secara global
 module.exports = {
     ChatAIHandler
 }

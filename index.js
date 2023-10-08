@@ -20,6 +20,7 @@ client.on('ready', () => {
     console.log('Client is ready!');
 });
 
+// menambah Listener yang memantau pesan yang diterima oleh client
 client.on('message', async msg => {
     try {
         const chat = await msg.getChat();
