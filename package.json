@@ -1,0 +1,19 @@
+{
+  "name": "tugas1_stesting",
+  "version": "1.0.0",
+  "description": "Whatsapp Bot Asisten mahasiswa yang dilengkapi dengan fitur chatGPT",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "restart": "nodemon index.js"
+  },
+  "author": "213045_Pahriansyah_213049_Muh.Akram",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.1",
+    "circular-json": "^0.5.9",
+    "nodemon": "^3.0.1",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.22.1"
+  }
+}
