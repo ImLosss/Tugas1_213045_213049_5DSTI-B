@@ -21,14 +21,14 @@ const ChatAIHandler = async (msg, sender) => {
 
     console.log(prompt);
 
-    const response = await chapGPT(prompt, sender)
+    const response = await chatGPT(prompt, sender)
     msg.reply(response)
     .catch(() => {
         chat.sendMessage(response);
     })
 }
 
-const chapGPT = async (prompt, sender) => {
+const chatGPT = async (prompt, sender) => {
 
     const dir_history_chat = `database/data_chat/${ sender }`;
 

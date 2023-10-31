@@ -43,7 +43,7 @@ client.on('message', async msg => {
         }
 
         if (prefix.some(pre => text.startsWith(`${ pre }tanya`))) await ChatAIHandler(msg, sender);
-        else if(prefix.some(pre => text.startsWith(`${ pre }absen`) || text.startsWith(`${ pre }hadir`) || text.startsWith(`${ pre }hadirc`)  || text == `${ pre }delabsen` || text == `${ pre }close`) && chat.isGroup) await absensiHandler(msg, sender, isAdmin)
+        else if(prefix.some(pre => text.startsWith(`${ pre }absen`) || text.startsWith(`${ pre }hadir`) || text.startsWith(`${ pre }hadirc`)  || text == `${ pre }close`) && chat.isGroup) await absensiHandler(msg, sender, isAdmin)
     } catch(e) {
         console.log(e);
     }
